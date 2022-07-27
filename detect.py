@@ -60,9 +60,8 @@ text = pytesseract.image_to_string(crop_img_loc, config = f'--psm 8 --oem 3 -c t
 
 # Convert image to grayscale
 carplate_extract_img_gray = cv2.cvtColor(cv2.imread(crop_img_loc), cv2.COLOR_RGB2GRAY)
-
 # Apply median blur
-carplate_extract_img_gray_blur = cv2.medianBlur(carplate_extract_img_gray,3) # kernel size 3
+carplate_extract_img_gray_blur = cv2.medianBlur(carplate_extract_img_gray, 3) # kernel size 3
 
 # Testing all PSM values
 for i in range(3, 14):
