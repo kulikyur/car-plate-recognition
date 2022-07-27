@@ -1,36 +1,34 @@
 import cv2
+import numpy as np
+
+#############################################
+nPlateCascade = cv2.CascadeClassifier("haarcascade_russian_plate_number.xml")
+minArea = 50
+color = (255, 0, 255)
+###############################################
 
 # Создаем объект захвата видео, в этом случае мы читаем видео из файла
-vid_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-vid_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1050)
-vid_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-if (vid_capture.isOpened() == False):
-    print("Ошибка открытия видеофайла")
-# Чтение fps и количества кадров
-else:
-    # Получить информацию о частоте кадров
-    # Можно заменить 5 на CAP_PROP_FPS, это перечисления
-    fps = vid_capture.get(5)
-    print('Фреймов в секунду: ', fps, 'FPS')
-    # Получить количество кадров
-    # Можно заменить 7 на CAP_PROP_FRAME_COUNT, это перечисления
-    frame_count = vid_capture.get(7)
-    print('Частота кадров: ', frame_count)
-    print('\n-----------------------------\nДля завершения нажмите "q" или Esc...')
-file_count = 0
-while (vid_capture.isOpened()):
+vid_capture = cv2.VideoCapture('images/IMG_4163.mp4')
+object_detector = cv2.createBackgroundSubtractorMOG2()
+
+while vid_capture.isOpened():
     # Метод vid_capture.read() возвращают кортеж, первым элементом является логическое значение
     # а вторым кадр
     ret, frame = vid_capture.read()
+
+    mask = object_detector.apply(frame)
+    numberPlates = nPlateCascade.detectMultiScale(mask, scaleFactor=1.1, minNeighbors=11, minSize=(20, 20))
+
+    for x, y, w, h in numberPlates:
+        print(x, y, w, h)
+        area = w * h
+        if area > minArea:
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 2)
+            cv2.putText(frame, "Number Plate", (x, y - 5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, color, 2)
+
     if ret == True:
         cv2.imshow('Look', frame)
-        file_count += 1
-        print('Кадр {0:04d}'.format(file_count))
-        # writefile = 'Resources/Image_sequence/is42_{0:04d}.jpg'.format(file_count)
-        # cv2.imwrite(writefile, frame)
-        # 20 в миллисекундах, попробуйте увеличить значение, скажем, 50 и
-        # понаблюдайте за изменениями в показе
-        key = cv2.waitKey(20)
+        key = cv2.waitKey(30)
 
         if (key == ord('q')) or key == 27:
             break

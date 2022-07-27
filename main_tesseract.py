@@ -13,12 +13,12 @@ def extract_num(img_filename):
     img = cv2.imread(img_filename)
     # Img To Gray
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    nplate = cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=11, minSize=(20, 20))
+    nplate = cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=20, minSize=(10, 10))
     # crop portion
     for (x, y, w, h) in nplate:
         #wT, hT, cT = img.shape
         #a, b = int(wT), int(hT)
-        a,b = (int(0.018*img.shape[0]), int(0.018*img.shape[1]))
+        a, b = (int(0.02*img.shape[0]), int(0.02*img.shape[1]))
         plate = img[y + a:y + h - a, x + b:x + w - b, :]
         # make the img more darker to identify LPR
         kernel = np.ones((1, 1), np.uint8)
