@@ -4,7 +4,10 @@ import numpy as np
 
 # https://towardsdatascience.com/russian-car-plate-detection-with-opencv-and-tesseractocr-dce3d3f9ff5c
 # https://github.com/AlexandrVP/Car-number-plate-detection-and-recognition/blob/master/car_number_detector_ssd.py
-pytesseract.pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesseract.exe"
+import platform
+
+if platform.system() == 'Windows':
+    pytesseract.pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesseract.exe"
 
 
 image = cv2.imread('images/plate_10.jpg')
@@ -44,7 +47,7 @@ for i in cnts:
         NumberPlateCount = approx
         x, y, w, h = cv2.boundingRect(i)
         crp_img = image[y:y+h, x:x+w]
-        cv2.imwrite(str(name)+ '.png', crp_img)
+        cv2.imwrite('images/' + str(name) + '.png', crp_img)
         name += 1
 
         break
@@ -53,7 +56,7 @@ cv2.drawContours(image, NumberPlateCount, -1, (0, 255, 0), 3)
 #cv2.imshow("Final", image)
 #cv2.waitKey(0)
 
-crop_img_loc = '2.png'
+crop_img_loc = 'images/2.png'
 #cv2.imshow("Cropped image", cv2.imread(crop_img_loc))
 #cv2.waitKey(0)
 
