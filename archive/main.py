@@ -14,7 +14,7 @@ minArea = 200
 color = (255, 0, 255)
 x1, y1, y2, x2, = 655, 420,  480,  430
 ###############################################
-img = cv2.imread('images/plate_179.jpg')
+img = cv2.imread('../images/plate_179.jpg')
 imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 numberPlates = nPlateCascade.detectMultiScale(imgGray, scaleFactor=1.1, minNeighbors=11, minSize=(20, 20))
 

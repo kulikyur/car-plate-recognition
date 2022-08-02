@@ -7,7 +7,7 @@ pytesseract.pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesserac
 frameWidth = 640    #Frame Width
 franeHeight = 480   # Frame Height
 
-plateCascade = cv2.CascadeClassifier('haarcascade_russian_plate_number.xml')
+plateCascade = cv2.CascadeClassifier('libs/haarcascade_russian_plate_number.xml')
 minArea = 500
 
 cap = cv2.VideoCapture(0)

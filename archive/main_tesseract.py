@@ -38,11 +38,11 @@ def extract_num(img_filename):
 
         #cv2.imshow("plate", plate)
 
-    cv2.imwrite("Result.png", img)
+    cv2.imwrite("../Result.png", img)
     cv2.imshow("Result", img)
     if cv2.waitKey(0) == 113:
         exit()
     cv2.destroyAllWindows()
 
 
-extract_num("images/plate_3.jpg")
+extract_num("../images/plate_3.jpg")

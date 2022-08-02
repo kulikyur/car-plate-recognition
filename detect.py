@@ -90,7 +90,7 @@ for i in range(3, 14):
     read = ''.join(e for e in read if e.isalnum())
     if read[0] == '0':
         read = 'о' + read[1:]
-    print(read)
+    print(read.upper())
 #"""
 
 
